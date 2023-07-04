@@ -42,6 +42,21 @@ const PosStat = (props) => {
   )
 }
 
+const Statistics = (props) => {
+  return (
+    <div>
+      <Stat name={"good"} value={props.good}></Stat>
+      <Stat name={"neutral"} value={props.neutral}></Stat>
+      <Stat name={"bad"} value={props.bad}></Stat>
+      <Stat name={"all"} value={props.all.length}></Stat>
+      <AvgStat name={"average"} array={props.all}></AvgStat>
+      <PosStat name={"positive"} array={props.all} ></PosStat>
+    </div>
+  )
+}
+
+
+
 const App = () => {
   // tallenna napit omaan tilaansa
   const [good, setGood] = useState(0)
@@ -79,12 +94,12 @@ const App = () => {
       <div>
       <Header props={"Statistics"}></Header>
       </div>
-      <Stat name={"good"} value={good}></Stat>
-      <Stat name={"neutral"} value={neutral}></Stat>
-      <Stat name={"bad"} value={bad}></Stat>
-      <Stat name={"all"} value={all.length}></Stat>
-      <AvgStat name={"average"} array={all}></AvgStat>
-      <PosStat name={"positive"} array={all} ></PosStat>
+      <Statistics
+       good={good}
+       neutral={neutral}
+       bad={bad}
+       all={all}
+       ></Statistics>
       </div>
     </div>
   )
