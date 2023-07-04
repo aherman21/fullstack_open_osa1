@@ -43,6 +43,9 @@ const PosStat = (props) => {
 }
 
 const Statistics = (props) => {
+  if (props.all.length === 0) {
+    return <p>No feedback given</p>
+  } else {
   return (
     <div>
       <Stat name={"good"} value={props.good}></Stat>
@@ -53,8 +56,8 @@ const Statistics = (props) => {
       <PosStat name={"positive"} array={props.all} ></PosStat>
     </div>
   )
+ }
 }
-
 
 
 const App = () => {
