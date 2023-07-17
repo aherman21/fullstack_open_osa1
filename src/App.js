@@ -8,7 +8,7 @@ const Header = (props) => {
   )
 }
 
-const Stat = (props) => {
+const StatisticLine = (props) => {
   return (
     <div>
       <p>{props.name} {props.value}</p>
@@ -18,27 +18,23 @@ const Stat = (props) => {
 
 const AvgStat = (props) => {
 
-  const sum = props.array.reduce((total, num) => total + num, 0)
-  const avg = sum/props.array.length
+  const sum = props.reduce((total, num) => total + num, 0)
+  const avg = sum/props.length
 
 
   return (
-    <div>
-      <p>{props.name} {isNaN(avg) ? 0 : avg}</p>
-    </div>
+    avg
   )
 
 }
 
 const PosStat = (props) => {
 
-  const positives = props.array.filter(num => num > 0)
-  const percentage = (positives.length/props.array.length) * 100
+  const positives = props.filter(num => num > 0)
+  const percentage = (positives.length/props.length) * 100
 
   return (
-    <div>
-      <p>{props.name} {isNaN(percentage) ? 0 : percentage} %</p>
-    </div>
+    percentage + " %"
   )
 }
 
@@ -48,16 +44,22 @@ const Statistics = (props) => {
   } else {
   return (
     <div>
-      <Stat name={"good"} value={props.good}></Stat>
-      <Stat name={"neutral"} value={props.neutral}></Stat>
-      <Stat name={"bad"} value={props.bad}></Stat>
-      <Stat name={"all"} value={props.all.length}></Stat>
-      <AvgStat name={"average"} array={props.all}></AvgStat>
-      <PosStat name={"positive"} array={props.all} ></PosStat>
+      <StatisticLine name={"good"} value={props.good} />
+      <StatisticLine name={"neutral"} value={props.neutral} />
+      <StatisticLine name={"bad"} value={props.bad} />
+      <StatisticLine name={"all"} value={props.all.length} />
+      <StatisticLine name={"average"} value={AvgStat(props.all)} />
+      <StatisticLine name={"positive"} value={PosStat(props.all)} />
     </div>
   )
  }
 }
+
+const Button = ({ handleClick, text}) => (
+  <button onClick={handleClick}>
+    {text}
+  </button>
+)
 
 
 const App = () => {
@@ -86,14 +88,9 @@ const App = () => {
     <div>
       <Header props={"Give feedback"}></Header>
       <div>
-        <button onClick={handleGoodClick}>
-          good
-        </button>
-        <button onClick={handleNeutralClick}> 
-          neutral
-        </button>
-        <button onClick={handleBadClick}>bad
-        </button>
+        <Button handleClick={handleGoodClick} text='good'/>
+        <Button handleClick={handleNeutralClick} text='neutral'/>
+        <Button handleClick={handleBadClick} text='bad'/>
       <div>
       <Header props={"Statistics"}></Header>
       </div>
