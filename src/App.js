@@ -10,9 +10,11 @@ const Header = (props) => {
 
 const StatisticLine = (props) => {
   return (
-    <div>
-      <p>{props.name} {props.value}</p>
-    </div>
+    <tr>
+      <td>{props.name}</td>
+      <p></p>
+      <td>{props.value}</td>
+    </tr>
   )
 }
 
