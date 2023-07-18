@@ -25,7 +25,8 @@ const App = () => {
    
   const [selected, setSelected] = useState(0)
   const [points, setPoints] = useState(new Array(anecdotes.length).fill(0))
-  const copy = [...points]
+  const [voteButtonPressed, setVoteButtonPressed] = useState(0)
+ 
 
   const handleChange = () => {
     setSelected(getRandomInt(anecdotes.length))
@@ -35,19 +36,46 @@ const App = () => {
     const copyPoints = [...points]
     copyPoints[selected] += 1
     setPoints(copyPoints)
+    setVoteButtonPressed(1) //to only show anecdote with most points when some of them has been voted
   }
 
-  return (
+  const getMaxVotesIndex = () => {
+    let maxVotes = -1
+    let maxIndex = -1
 
+    for (let i = 0; i < points.length; i++) {
+      if (points[i] > maxVotes) {
+        maxVotes = points[i]
+        maxIndex = i
+      }
+    }
+    return maxIndex
+  }
+
+  const maxVotesIndex = getMaxVotesIndex()
+  console.log(maxVotesIndex)
+  return (
+    
     <div>
+      <div>
       <div>
         <Button handleClick={handleChange} text="Change Anecdote"></Button>
         <Button handleClick={handleVote} text="vote"></Button>
       </div>
+      <div><h2>Anecdote</h2></div>
       {anecdotes[selected]}
       <p>Votes: {points[selected]}</p>
     </div>
+    {voteButtonPressed !== 0 && (
+      <div>
+        <h2>Anecdote with the most votes:</h2>
+        <p>{anecdotes[maxVotesIndex]}</p>
+        <p>Points: {points[maxVotesIndex]}</p>
+      </div>
+    )}
+    </div>
   )
 }
+
 
 export default App
